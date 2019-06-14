@@ -1,0 +1,34 @@
+server:
+  port: 8987
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: 配置文件 git地址
+          #  仓库路径下相对搜索位置，可配置多个
+          search-paths: config
+          # 服务器上配置了 .ssh秘钥,这里就不用写明文了
+#          username: root
+#          password: root
+    bus:
+      enabled: true #是否启用springcloud config bus。
+      trace:
+        enabled: true # 开启跟踪总线事件。
+  rabbitmq:
+    host: alima1
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /admin
+
+#SpringBoot2.x之后必须添加次配置，和上述的客户端 client 增加的的配置一样
+#名称不一样是为了做区分。
+# git 配置中心  的 webHook 地址 配置为 "config-server-host/bus-refresh"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
